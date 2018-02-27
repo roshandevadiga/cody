@@ -6032,9 +6032,9 @@ react-hot-loader@next:
     redbox-react "^1.3.6"
     source-map "^0.6.1"
 
-react-octicons@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/react-octicons/-/react-octicons-0.1.0.tgz#98de0a3e1b1b7c9a12d40b7701d6695980875d0f"
+react-octicons@0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/react-octicons/-/react-octicons-0.2.0.tgz#50cfcc6a4d3a75c2f8acf116bcbdfdd7e0b01513"
 
 react-redux@5.0.6:
   version "5.0.6"

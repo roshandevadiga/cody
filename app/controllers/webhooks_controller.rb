@@ -1,5 +1,9 @@
 class WebhooksController < ApplicationController
+  include WebhookSecurity
+
   protect_from_forgery with: :null_session
+
+  before_action :verify_webhook_signature!, only: %i[integration]
 
   def pull_request
     body = JSON.parse(request.body.read)

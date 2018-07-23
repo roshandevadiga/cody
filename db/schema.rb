@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180709222702) do
+ActiveRecord::Schema.define(version: 20180723042927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pgcrypto"
+
+  create_table "api_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "password_digest"
+    t.index ["user_id"], name: "index_api_keys_on_user_id"
+  end
 
   create_table "pull_requests", id: :serial, force: :cascade do |t|
     t.string "status"
@@ -96,6 +103,7 @@ ActiveRecord::Schema.define(version: 20180709222702) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "api_keys", "users"
   add_foreign_key "pull_requests", "repositories"
   add_foreign_key "review_rules", "repositories"
   add_foreign_key "settings", "repositories"

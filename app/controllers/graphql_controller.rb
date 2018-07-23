@@ -1,7 +1,7 @@
 class GraphqlController < ApplicationController
-  include RequiresAuthentication
-
   protect_from_forgery with: :null_session
+
+  before_action :require_authentication!
 
   def execute
     variables = ensure_hash(params[:variables])
@@ -38,5 +38,24 @@ class GraphqlController < ApplicationController
     else
       raise ArgumentError, "Unexpected parameter: #{ambiguous_param}"
     end
+  end
+
+  def require_authentication!
+    unless current_user.present?
+      head :unauthorized
+      return
+    end
+  end
+
+  def current_user
+    access_token = access_token_from_session || access_token_from_header
+  end
+
+  def access_token_from_session
+    session[:access_token].presence
+  end
+
+  def access_token_from_header
+    token_and_options&.first&.presence
   end
 end

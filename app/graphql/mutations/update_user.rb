@@ -1,5 +1,6 @@
 Mutations::UpdateUser = GraphQL::Relay::Mutation.define do
   name "UpdateUser"
+  description "Update the currently authenticated user"
   return_field :user, Types::UserType
 
   input_field :email, !types.String

@@ -1,45 +1,39 @@
-Types::RepositoryType = GraphQL::ObjectType.define do
-  name "Repository"
+class Types::RepositoryType < Types::BaseObject
 
   implements GraphQL::Relay::Node.interface
 
   global_id_field :id
 
-  field :owner, !types.String
-  field :name, !types.String
+  field :owner, String, null: false
+  field :name, String, null: false
 
-  connection :pullRequests, Types::PullRequestType.connection_type do
-    description "This repository's Pull Requests"
-    argument :status, types.String
-    resolve ->(repository, args, ctx) {
-      # status = args[:status] || "pending_review"
-      repository.pull_requests.order("created_at DESC")
-    }
+  field :pull_requests, Types::PullRequestType.connection_type, description: "This repository's Pull Requests", null: true, connection: true do
+    argument :status, String, required: false
   end
 
-  field :pullRequest do
-    type Types::PullRequestType
-    argument :number, !types.String
-    description "Find a PullRequest by number"
-    resolve ->(repository, args, ctx) {
-      repository.pull_requests.find_by(number: args[:number])
-    }
+  def pull_requests(**args)
+    @object.pull_requests.order("created_at DESC")
   end
 
-  connection :reviewRules do
-    type Types::ReviewRuleType.connection_type
-    description "This repository's review rules"
-    resolve ->(repository, args, ctx) {
-      repository.review_rules
-    }
+  field :pull_request, Types::PullRequestType, description: "Find a PullRequest by number", null: true do
+    argument :number, String, required: true
   end
 
-  field :reviewRule do
-    type Types::ReviewRuleType
-    argument :shortCode, !types.String
-    description "Find a Review Rule by code"
-    resolve ->(repository, args, ctx) {
-      repository.review_rules.find_by(short_code: args[:shortCode])
-    }
+  def pull_request(**args)
+    @object.pull_requests.find_by(number: args[:number])
+  end
+
+  field :review_rules, Types::ReviewRuleType.connection_type, description: "This repository's review rules", null: true, connection: true
+
+  def review_rules
+    @object.review_rules
+  end
+
+  field :review_rule, Types::ReviewRuleType, description: "Find a Review Rule by code", null: true do
+    argument :short_code, String, required: true
+  end
+
+  def review_rule(**args)
+    @object.review_rules.find_by(short_code: args[:short_code])
   end
 end

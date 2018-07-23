@@ -1,15 +1,13 @@
-Types::QueryType = GraphQL::ObjectType.define do
-  name "Query"
+class Types::QueryType < Types::BaseObject
   description "The query root"
 
-  field :viewer do
-    type Types::UserType
-    description "The currently authenticated user"
-    resolve ->(obj, args, ctx) {
-      Current.user
-    }
+  field :viewer, Types::UserType, null: true,
+    description: "The currently authenticated user"
+
+  def viewer
+    Current.user
   end
 
-  field :node, GraphQL::Relay::Node.field
-  field :nodes, GraphQL::Relay::Node.plural_field
+  field :node, field: GraphQL::Relay::Node.field
+  field :nodes, field: GraphQL::Relay::Node.plural_field
 end

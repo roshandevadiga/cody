@@ -1,32 +1,30 @@
-Types::ReviewRuleType = GraphQL::ObjectType.define do
-  name "ReviewRule"
+class Types::ReviewRuleType < Types::BaseObject
 
   implements GraphQL::Relay::Node.interface
 
   global_id_field :id
 
-  field :name, !types.String, "The rule's name"
-  field :shortCode, !types.String do
-    description "Short code identifying the rule in commands"
-    resolve ->(obj, args, ctx) {
-      obj.short_code
-    }
+  field :name, String, "The rule's name", null: false
+  field :short_code, String, description: "Short code identifying the rule in commands", null: false
+
+  def short_code
+    @object.short_code
   end
-  field :type, !types.String, "The rule's type"
-  field :reviewer, !types.String, "The reviewer assigned to this rule" do
-    resolve ->(obj, args, ctx) {
-      obj.reviewer_human_name
-    }
+  field :type, String, "The rule's type", null: false
+  field :reviewer, String, "The reviewer assigned to this rule", null: false
+
+  def reviewer
+    @object.reviewer_human_name
   end
-  field :repository, !types.String, "The repository that owns this rule"
-  field :match, !types.String, "The criteria used to match this rule" do
-    resolve ->(obj, args, ctx) {
-      case obj
-      when ReviewRuleAlways
-        true
-      else
-        obj.file_match
-      end
-    }
+  field :repository, String, "The repository that owns this rule", null: false
+  field :match, String, "The criteria used to match this rule", null: false
+
+  def match
+    case @object
+    when ReviewRuleAlways
+      true
+    else
+      @object.file_match
+    end
   end
 end

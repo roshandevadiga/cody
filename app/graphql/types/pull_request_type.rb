@@ -1,29 +1,29 @@
-Types::PullRequestType = GraphQL::ObjectType.define do
-  name "PullRequest"
+class Types::PullRequestType < Types::BaseObject
 
   implements GraphQL::Relay::Node.interface
 
   global_id_field :id
 
-  field :number, !types.String
-  field :repository, !types.String do
-    resolve ->(obj, args, ctx) {
-      obj.repository.full_name
-    }
-  end
-  field :status, !types.String
+  field :number, String, null: false
+  field :repository, String, null: false
 
-  connection :reviewers, Types::ReviewerType.connection_type do
-    argument :status, types.String
-    resolve ->(pull_request, args, ctx) {
-      case args[:status]
-      when Reviewer::STATUS_PENDING_APPROVAL
-        pull_request.reviewers.pending_review
-      when Reviewer::STATUS_APPROVED
-        pull_request.reviewers.completed_review
-      else
-        pull_request.reviewers
-      end
-    }
+  def repository
+    @object.repository.full_name
+  end
+  field :status, String, null: false
+
+  field :reviewers, Types::ReviewerType.connection_type, null: true, connection: true do
+    argument :status, String, required: false
+  end
+
+  def reviewers(**args)
+    case args[:status]
+    when Reviewer::STATUS_PENDING_APPROVAL
+      @object.reviewers.pending_review
+    when Reviewer::STATUS_APPROVED
+      @object.reviewers.completed_review
+    else
+      @object.reviewers
+    end
   end
 end

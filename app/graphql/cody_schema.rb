@@ -1,8 +1,8 @@
-CodySchema = GraphQL::Schema.define do
-  mutation(Types::MutationType)
-  query(Types::QueryType)
+class CodySchema < GraphQL::Schema
+  mutation Types::MutationType
+  query Types::QueryType
 
-  id_from_object ->(object, type_definition, query_ctx) {
+  def self.id_from_object(object, type_definition, query_ctx)
     if object.is_a?(ApplicationRecord)
       object.to_signed_global_id
     elsif object.respond_to?(:owner) && object.respond_to?(:name)
@@ -10,9 +10,9 @@ CodySchema = GraphQL::Schema.define do
     else
       raise "Unexpected object: #{object.inspect}"
     end
-  }
+  end
 
-  object_from_id ->(id, query_ctx) {
+  def self.object_from_id(id, query_ctx)
     if object = GlobalID::Locator.locate_signed(id)
       return object
     else
@@ -24,9 +24,9 @@ CodySchema = GraphQL::Schema.define do
     end
 
     raise "Couldn't decode ID: #{id}"
-  }
+  end
 
-  resolve_type ->(obj, ctx) {
+  def self.resolve_type(obj, ctx)
     case obj
     when PullRequest
       Types::PullRequestType
@@ -39,5 +39,5 @@ CodySchema = GraphQL::Schema.define do
     else
       raise "Unexpected object: #{obj}"
     end
-  }
+  end
 end

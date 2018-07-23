@@ -1,19 +1,16 @@
-Types::ReviewerType = GraphQL::ObjectType.define do
-  name "Reviewer"
+class Types::ReviewerType < Types::BaseObject
 
   implements GraphQL::Relay::Node.interface
 
   global_id_field :id
 
-  field :login, !types.String
-  field :status, !types.String
+  field :login, String, null: false
+  field :status, String, null: false
 
-  field :reviewRule do
-    type Types::ReviewRuleType
-    description "The Review Rule that added this Reviewer"
-    resolve ->(reviewer, args, ctx) {
-      reviewer.review_rule
-    }
+  field :review_rule, Types::ReviewRuleType, description: "The Review Rule that added this Reviewer", null: true
+
+  def review_rule
+    @object.review_rule
   end
 
   VersionType = GraphQL::ObjectType.define do
@@ -30,10 +27,9 @@ Types::ReviewerType = GraphQL::ObjectType.define do
     )
   end
 
-  field :versions do
-    type types[VersionType]
-    resolve ->(reviewer, args, ctx) {
-      reviewer.versions.map(&:changeset)
-    }
+  field :versions, [VersionType, null: true], null: true
+
+  def versions
+    @object.versions.map(&:changeset)
   end
 end

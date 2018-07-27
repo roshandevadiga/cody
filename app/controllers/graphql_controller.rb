@@ -1,4 +1,6 @@
 class GraphqlController < ApplicationController
+  include ActionController::HttpAuthentication::Token
+
   protect_from_forgery with: :null_session
 
   before_action :require_authentication!
@@ -48,14 +50,18 @@ class GraphqlController < ApplicationController
   end
 
   def current_user
-    access_token = access_token_from_session || access_token_from_header
+    access_token = access_token_from_header || access_token_from_session
+    Current.user ||= User.from_access_token(access_token)
   end
 
+  # The /token/authenticate route stores tokens in the session after it confirms
+  # the user's identity.
   def access_token_from_session
     session[:access_token].presence
   end
 
+  # External clients use the Authorization header to pass access tokens.
   def access_token_from_header
-    token_and_options&.first&.presence
+    token_and_options(request)&.first&.presence
   end
 end

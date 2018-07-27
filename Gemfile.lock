@@ -332,6 +332,7 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
+    timecop (0.9.1)
     transit-ruby (0.8.602)
       addressable (~> 2.3)
       msgpack (~> 1.1.0)
@@ -414,6 +415,7 @@ DEPENDENCIES
   sidekiq-unique-jobs
   skylight
   spring
+  timecop
   transit-ruby
   turbolinks
   tzinfo-data

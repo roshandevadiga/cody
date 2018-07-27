@@ -10,6 +10,7 @@ class SessionsController < ApplicationController
     if user.present?
       flash[:success] = "You are signed in"
       session[:user_id] = user.id
+      session[:access_token] = user.make_access_token
     else
       flash[:danger] = "You could not be authenticated"
     end
@@ -19,6 +20,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    session[:access_token] = nil
     flash[:success] = "You have been signed out"
     redirect_to new_session_path
   end

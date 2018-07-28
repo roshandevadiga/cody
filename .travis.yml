@@ -19,6 +19,7 @@ env:
   - SUITE=yarn
   global:
   - CODY_GITHUB_ACCESS_TOKEN=abc123
+  - CODY_JWT_SECRET_KEY=fake
   - CODY_GITHUB_REPO=aergonaut/testrepo
   - CODY_HOST=cody.example
   - secure: iDS7NXqs0/3rIwFGKPLHbEhVoo/pnKD2WxS5uyWzkinz5hL56UpbtbLq1YWFeYkMEuE0xAUrMeRsJfpmj5mj7dfA2I89fNgsAKF8zVKKy8HujPsgJ/aq282Kzyk3HaE/q/rUtZFXKmHDhIxc3jenPd6upbSaUWvJuaYQFE9DsKiSSEvxP2J8EkHjU+F3CDicA7Rd1NPUhmmoB8lshvzsMTScwnDTEx8YE8gFcEj+yfPV5b3flDzIpkdbd7A8ET6yuoVbnsW1PaGrUy8xu877TW5CG1y1Uzha2W8SoMmxkzIcmePa8P3x1RoOYu/S7jrxnS26aRkblCQlcdbUrgHAdJukQWQpoAs39PJc3kwlQeKXSudqoOFKQjtfsqY2qKjkJeNsxGKN5A8dzK47B9z//B7VZ+ALPpzIkXMr6/vFYVFVhVj/KO1kLF/wvvLmaQ46BN8AhQDrSxgkzdySsCaJcLigJwxia1XBsyP3+1zBV9wqvb8jnr892Cvv60LGeS6NbfH0z/H9UT/v0TthRVx4+r17o3tgIQkciy7LSnca8EtKX2eKiSmZXqi9p8GrppQn5dfkdPBQ1m+ERIi29FSlDwR0uon99kC/6+2+r1cgDyw569HSWj2m78x+6uaqx62r4LgZVvlFE/iaiSQdR4FV7yyhyEuR/b8D2T8lfcYWh1M=

@@ -7,7 +7,9 @@ class Types::ReviewerType < Types::BaseObject
   field :login, String, null: false
   field :status, String, null: false
 
-  field :review_rule, Types::ReviewRuleType, description: "The Review Rule that added this Reviewer", null: true
+  field :review_rule, Types::ReviewRuleType,
+    description: "The Review Rule that added this Reviewer",
+    null: true
 
   def review_rule
     @object.review_rule

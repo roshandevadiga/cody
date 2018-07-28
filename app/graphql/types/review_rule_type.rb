@@ -5,7 +5,9 @@ class Types::ReviewRuleType < Types::BaseObject
   global_id_field :id
 
   field :name, String, "The rule's name", null: false
-  field :short_code, String, description: "Short code identifying the rule in commands", null: false
+  field :short_code, String,
+    description: "Short code identifying the rule in commands",
+    null: false
 
   def short_code
     @object.short_code
@@ -16,6 +18,7 @@ class Types::ReviewRuleType < Types::BaseObject
   def reviewer
     @object.reviewer_human_name
   end
+
   field :repository, String, "The repository that owns this rule", null: false
   field :match, String, "The criteria used to match this rule", null: false
 

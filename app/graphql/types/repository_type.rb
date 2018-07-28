@@ -7,7 +7,8 @@ class Types::RepositoryType < Types::BaseObject
   field :owner, String, null: false
   field :name, String, null: false
 
-  field :pull_requests, Types::PullRequestType.connection_type, description: "This repository's Pull Requests", null: true, connection: true do
+  field :pull_requests, Types::PullRequestType.connection_type, null: true, connection: true do # rubocop:disable Metrics/LineLength
+    description "This reapository's Pull Requests"
     argument :status, String, required: false
   end
 
@@ -15,7 +16,8 @@ class Types::RepositoryType < Types::BaseObject
     @object.pull_requests.order("created_at DESC")
   end
 
-  field :pull_request, Types::PullRequestType, description: "Find a PullRequest by number", null: true do
+  field :pull_request, Types::PullRequestType, null: true do
+    description "Find a PullRequest by number"
     argument :number, String, required: true
   end
 
@@ -23,13 +25,16 @@ class Types::RepositoryType < Types::BaseObject
     @object.pull_requests.find_by(number: args[:number])
   end
 
-  field :review_rules, Types::ReviewRuleType.connection_type, description: "This repository's review rules", null: true, connection: true
+  field :review_rules, Types::ReviewRuleType.connection_type, null: true, connection: true do # rubocop:disable Metrics/LineLength
+    description "This repository's review rules"
+  end
 
   def review_rules
     @object.review_rules
   end
 
-  field :review_rule, Types::ReviewRuleType, description: "Find a Review Rule by code", null: true do
+  field :review_rule, Types::ReviewRuleType, null: true do
+    description "Find a Review Rule by code"
     argument :short_code, String, required: true
   end
 

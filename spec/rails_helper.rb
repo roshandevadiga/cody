@@ -67,6 +67,18 @@ RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by :selenium_chrome
   end
+
+  config.before(:each, type: :controller) do
+    ActiveSupport::CurrentAttributes.reset_all
+  end
+
+  config.after(:each, type: :controller) do
+    ActiveSupport::CurrentAttributes.reset_all
+  end
+
+  config.define_derived_metadata(file_path: /spec\/system/) do |metadata|
+    metadata[:browser] = true
+  end
 end
 
 Shoulda::Matchers.configure do |config|

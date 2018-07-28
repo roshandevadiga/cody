@@ -17,12 +17,12 @@ RSpec.describe "Foobar", type: :system do
     )
   end
 
+  let!(:pull_requests) { FactoryBot.create_list :pull_request, 5 }
+
   it "loads the page!", aggregate_failures: true do
-    pull_requests = FactoryBot.create_list :pull_request, 5
-    # binding.pry
     visit "/"
     expect(page).to have_text("Cody")
-    # binding.pry
+
     pull_requests.each do |pr|
       expect(page).to have_text(pr.repository.full_name)
     end

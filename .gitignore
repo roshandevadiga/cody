@@ -30,3 +30,5 @@ site/
 yarn-error.log
 
 coverage/
+
+spec/examples.txt

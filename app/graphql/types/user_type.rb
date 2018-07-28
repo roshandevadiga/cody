@@ -21,7 +21,6 @@ class Types::UserType < Types::BaseObject
     connection: true
 
   def repositories
-    binding.pry
     Pundit.policy_scope(@object, Repository)
   end
 

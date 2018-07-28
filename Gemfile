@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.1.4'
+gem 'rails', '5.1.6'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.15'
 # Use SCSS for stylesheets
@@ -104,7 +104,7 @@ group :test do
 
   gem 'codecov', require: false
 
-  gem 'capybara'
+  gem 'capybara', "< 3"
   gem 'selenium-webdriver'
 
   gem 'timecop'

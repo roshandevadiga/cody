@@ -17,6 +17,7 @@ env:
   matrix:
   - SUITE=rspec
   - SUITE=yarn
+  - SUITE=browser
   global:
   - CODY_GITHUB_ACCESS_TOKEN=abc123
   - CODY_JWT_SECRET_KEY=fake
@@ -28,3 +29,7 @@ branches:
   - master
 addons:
   postgresql: "9.4"
+  chrome: stable
+  apt:
+    packages:
+      - chromium-chromedriver

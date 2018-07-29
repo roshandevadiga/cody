@@ -33,7 +33,7 @@ plugins:
         - .jsx
   fixme:
     enabled: true
-exclude_paths:
+exclude_patterns:
   - config/**/*
   - db/**/*
   - spec/**/*

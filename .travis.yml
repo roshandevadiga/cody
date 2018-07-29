@@ -11,6 +11,7 @@ before_install:
   - gem install bundler
 before_script:
   - gem update --system
+  - ln -s /usr/lib/chromium-browser/chromedriver ~/bin/chromedriver
 script:
   - script/ci
 env:

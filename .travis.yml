@@ -30,7 +30,7 @@ branches:
   - master
 addons:
   postgresql: "9.4"
-  chrome: stable
   apt:
     packages:
+      - google-chrome-stable
       - chromium-chromedriver

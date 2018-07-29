@@ -1,5 +1,9 @@
----
-engines:
+version: 2
+checks:
+  method_complexity:
+    config:
+      threshold: 10
+plugins:
   brakeman:
     enabled: true
     checks:
@@ -29,24 +33,9 @@ engines:
         - .jsx
   fixme:
     enabled: true
-ratings:
-  paths:
-  - Gemfile.lock
-  - "**.erb"
-  - "**.haml"
-  - "**.rb"
-  - "**.rhtml"
-  - "**.slim"
-  - "**.css"
-  - "**.inc"
-  - "**.js"
-  - "**.jsx"
-  - "**.module"
-  - "**.php"
-  - "**.py"
 exclude_paths:
-- config/**/*
-- db/**/*
-- spec/**/*
-- vendor/**/*
-- "**/__generated__/**/*"
+  - config/**/*
+  - db/**/*
+  - spec/**/*
+  - vendor/**/*
+  - "**/__generated__/**/*"

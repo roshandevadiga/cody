@@ -64,8 +64,13 @@ end
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
+  args = ["disable-gpu", "no-sandbox", "disable-dev-shm-usage"]
+  if ENV["CI"] == "true" || ENV["HEADLESS"] == "true"
+    args << "headless"
+  end
+
   config.before(:each, type: :system) do
-    driven_by :selenium, using: :chrome, options: { args: ["headless", "disable-gpu", "no-sandbox", "disable-dev-shm-usage"] }
+    driven_by :selenium, using: :chrome, options: { args: args }
   end
 
   config.before(:each, type: :controller) do

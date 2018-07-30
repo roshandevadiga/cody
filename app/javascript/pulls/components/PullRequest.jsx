@@ -19,7 +19,11 @@ const PullRequest = ({
     </div>
     <div className="level-right">
       <div className="level-item">
-        <Link to={`/repos/${repository}/pull/${number}`} className="button">
+        <Link
+          to={`/repos/${repository}/pull/${number}`}
+          className="button"
+          title={`${repository}#${number}`}
+        >
           &bull; &bull; &bull;
         </Link>
       </div>

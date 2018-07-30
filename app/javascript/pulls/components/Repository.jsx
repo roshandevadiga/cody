@@ -17,6 +17,7 @@ const Repository = ({ repository }: { repository: Repository_repository }) => (
         <Link
           to={`/repos/${repository.owner}/${repository.name}`}
           className="button"
+          title={`${repository.owner}/${repository.name}`}
         >
           &bull; &bull; &bull;
         </Link>

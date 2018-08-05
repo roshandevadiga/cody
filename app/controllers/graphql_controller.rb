@@ -2,6 +2,7 @@ class GraphqlController < ApplicationController
   include ActionController::HttpAuthentication::Token
 
   protect_from_forgery with: :null_session
+  before_action :require_authentication!
 
   def execute
     variables = ensure_hash(params[:variables])

@@ -5,7 +5,6 @@ class User < ApplicationRecord
   validates :uid, presence: true
 
   has_one :user_preference, inverse_of: :user
-  has_many :api_keys
 
   ALLOWED_JWT_ALGORITHMS = %w(HS256 RS256).freeze
 
@@ -20,12 +19,6 @@ class User < ApplicationRecord
 
   def role
     ActiveSupport::StringInquirer.new(super)
-  end
-
-  def make_api_key
-    api_key = self.api_keys.build
-    api_key.password = SecureRandom.base58(24)
-    api_key
   end
 
   def self.from_access_token(access_token)

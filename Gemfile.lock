@@ -97,7 +97,7 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday-http-cache (2.0.0)
       faraday (~> 0.8)
-    ffi (1.9.23)
+    ffi (1.9.25)
     font-awesome-sass (5.0.6.2)
       sass (>= 3.2)
     globalid (0.4.1)

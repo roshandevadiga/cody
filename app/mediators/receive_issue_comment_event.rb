@@ -4,6 +4,7 @@ class ReceiveIssueCommentEvent
   include Sidekiq::Worker
   include GithubApi
   include Skylight::Helpers
+  DIRECTIVE_REGEX = /([A-Za-z0-9_-]+)=\s?@?([A-Za-z0-9_-]+)/
 
   instrument_method
   def perform(payload)
@@ -124,7 +125,7 @@ class ReceiveIssueCommentEvent
     return false unless comment =~ /^cody\s+r(eplace)?\s+(?<directives>.*)$/
 
     directives = $LAST_MATCH_INFO[:directives]
-    return false unless directives.match?(/([A-Za-z0-9_-]+)=@?([A-Za-z0-9_-]+)/)
+    return false unless directives.match?(DIRECTIVE_REGEX)
     directives
   end
 
@@ -137,7 +138,7 @@ class ReceiveIssueCommentEvent
     pr = find_pull_request(@payload)
     return false unless pr
 
-    directives.scan(/([A-Za-z0-9_-]+)=@?([A-Za-z0-9_-]+)/).each do |code, login|
+    directives.scan(DIRECTIVE_REGEX).each do |code, login|
       reviewer = pr.generated_reviewers
         .joins(:review_rule)
         .find_by(review_rules: { short_code: code })

@@ -19,7 +19,7 @@ class PullRequest < ApplicationRecord
 
   delegate :installation, to: :repository
 
-  REVIEW_LINK_REGEX = /(?:R|r)eview(?:ed)?\s+in\s+#(\d+)/
+  REVIEW_LINK_REGEX = /\s*^(?:R|r)eview(?:ed)?\s+in\s+#(\d+)\s*$/
   REVIEWER_CHECKBOX_REGEX = /[*-] +\[([ x])\] +@([A-Za-z0-9_-]+)/
 
   STATUS_APRICOT = "APRICOT: Too few reviewers are listed".freeze

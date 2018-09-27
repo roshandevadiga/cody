@@ -48,6 +48,17 @@ RSpec.describe CreateOrUpdatePullRequest, type: :model do
           }
       end
 
+      context 'PR is referenced but not intended be linked' do
+        let(:body) do
+          " The previous version of this was reviewed in #1234"
+        end
+
+        it 'does not link the PR with other one' do
+          CreateOrUpdatePullRequest.new.perform(payload)
+          expect(PullRequest.find_by(number: 9876).parent_pull_request).to be_nil
+        end
+      end
+
       context "and the link is removed later" do
         let!(:pr) { FactoryBot.create :pull_request, status: "pending_review", number: 9876, repository: repo, parent_pull_request: parent_pr }
         let(:body) { "" }

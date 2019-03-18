@@ -58,7 +58,12 @@ class Repository < ApplicationRecord
     hexdigest = digest.hexdigest
     return unless self.config_hash != hexdigest
 
-    @config = Config.new(YAML.safe_load(contents))
+    @config =
+      begin
+        Config.new(YAML.safe_load(contents))
+      rescue Psych::Exception
+        return
+      end
     return unless self.config.valid?
 
     refresh_settings
@@ -102,14 +107,16 @@ class Repository < ApplicationRecord
         ReviewRuleFileMatch.find_or_initialize_by(
           short_code: rule_config[:short_code],
           repository_id: self.id,
-          file_match: Array.wrap(rule_config[:match][:path]).join("|")
-        )
+        ).tap do |r|
+          r.file_match = Array.wrap(rule_config[:match][:path]).join("|")
+        end
       elsif rule_config[:match][:diff]
         ReviewRuleDiffMatch.find_or_initialize_by(
           short_code: rule_config[:short_code],
           repository_id: self.id,
-          file_match: Array.wrap(rule_config[:match][:diff]).join("|")
-        )
+        ).tap do |r|
+          r.file_match = Array.wrap(rule_config[:match][:diff]).join("|")
+        end
       end
 
     return unless rule

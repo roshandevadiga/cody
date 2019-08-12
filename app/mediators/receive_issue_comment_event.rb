@@ -76,6 +76,13 @@ class ReceiveIssueCommentEvent
     end
 
     pr.assign_reviewers
+
+    CommandInvocation.record_invocation(
+      command: "cody approve",
+      args: "",
+      login: @payload["sender"]["login"],
+      pull_request_id: pr.id
+    )
   end
 
   instrument_method
@@ -164,6 +171,13 @@ class ReceiveIssueCommentEvent
     pr.reload
     pr.update_body
     pr.assign_reviewers
+
+    CommandInvocation.record_invocation(
+      command: "cody replace",
+      args: directives,
+      login: @payload["sender"]["login"],
+      pull_request_id: pr.id
+    )
   end
 
   instrument_method

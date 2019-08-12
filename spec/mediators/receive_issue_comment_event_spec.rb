@@ -69,7 +69,7 @@ RSpec.describe ReceiveIssueCommentEvent do
       context "when the commenter is a reviewer" do
         context "and they approve" do
           it "moves them into the completed_reviews list" do
-            subject
+            expect { subject }.to change { CommandInvocation.count }.by(1)
             pr.reload
             expect(pr.reviewers.pending_review.map(&:login)).to_not include(reviewer)
             expect(pr.reviewers.completed_review.map(&:login)).to include(sender)
@@ -140,6 +140,10 @@ RSpec.describe ReceiveIssueCommentEvent do
       it "replaces aergonaut with BrentW" do
         foo_reviewer = pr.reviewers.find_by(review_rule_id: rule.id)
         expect { job.perform(payload) }.to change { foo_reviewer.reload.login }.from("aergonaut").to("BrentW")
+      end
+
+      it "records the command usage" do
+        expect { job.perform(payload) }.to change { CommandInvocation.count }.by(1)
       end
     end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190218024353) do
+ActiveRecord::Schema.define(version: 20190731034122) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,16 @@ ActiveRecord::Schema.define(version: 20190218024353) do
     t.bigint "user_id"
     t.string "password_digest"
     t.index ["user_id"], name: "index_api_keys_on_user_id"
+  end
+
+  create_table "command_invocations", force: :cascade do |t|
+    t.string "command"
+    t.string "args"
+    t.string "login"
+    t.bigint "pull_request_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pull_request_id"], name: "index_command_invocations_on_pull_request_id"
   end
 
   create_table "installations", force: :cascade do |t|
@@ -140,6 +150,7 @@ ActiveRecord::Schema.define(version: 20190218024353) do
     t.index ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
   end
 
+  add_foreign_key "command_invocations", "pull_requests"
   add_foreign_key "pull_requests", "repositories"
   add_foreign_key "repositories", "installations"
   add_foreign_key "review_rules", "repositories"

@@ -20,7 +20,7 @@ RSpec.describe GraphqlController, type: :controller do
 
         it "is successful" do
           post :execute
-          expect(response).to be_success
+          expect(response).to be_successful
         end
       end
 
@@ -31,7 +31,7 @@ RSpec.describe GraphqlController, type: :controller do
 
         it "is successful" do
           post :execute
-          expect(response).to be_success
+          expect(response).to be_successful
         end
       end
     end

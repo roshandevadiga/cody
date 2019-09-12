@@ -37,7 +37,7 @@ class ReceiveIssueCommentEvent
 
     comment = @payload["comment"]["body"]
 
-    PaperTrail.whodunnit(@payload["sender"]["login"]) do
+    PaperTrail.request(whodunnit: @payload["sender"]["login"]) do
       if comment_affirmative?(comment)
         self.approval_comment
       elsif comment_rebuild_reviews?(comment)

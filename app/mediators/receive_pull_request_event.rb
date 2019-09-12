@@ -43,7 +43,7 @@ class ReceivePullRequestEvent
       return
     end
 
-    PaperTrail.whodunnit(@payload["sender"]["login"]) do
+    PaperTrail.request(whodunnit: @payload["sender"]["login"]) do
       case @payload["action"]
       when "opened"
         self.on_opened

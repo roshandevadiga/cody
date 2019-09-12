@@ -5,13 +5,10 @@ checks:
       threshold: 10
 plugins:
   brakeman:
-    enabled: true
-    checks:
-      csrf_not_protected_by_raising_exception:
-        enabled: false
+    enabled: false
   rubocop:
     enabled: true
-    channel: rubocop-0-54
+    channel: rubocop-0-74
   bundler-audit:
     enabled: true
   csslint:

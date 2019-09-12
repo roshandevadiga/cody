@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Setting < ApplicationRecord
-  belongs_to :repository
+  belongs_to :repository, required: false
 
   validates :key, presence: true, uniqueness: { scope: :repository_id }
   validates :value, presence: true

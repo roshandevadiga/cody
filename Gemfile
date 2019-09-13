@@ -117,10 +117,6 @@ group :test do
   gem 'timecop'
 end
 
-group :production do
-  gem 'rails_12factor'
-end
-
 gem 'graphiql-rails', group: :development
 
 gem 'tzinfo-data'
